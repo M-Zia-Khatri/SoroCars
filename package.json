@@ -1,0 +1,22 @@
+{
+  "name": "soro-cars",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run start",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "project": "file:",
+    "soro-cars": "file:"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
