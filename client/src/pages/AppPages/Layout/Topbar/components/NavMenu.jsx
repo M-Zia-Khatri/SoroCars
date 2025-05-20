@@ -12,47 +12,62 @@ import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { AppNavigation } from "@/constants/navigationConstants";
 
-const components = [
+const auctionMenuItems = [
   {
-    title: "View auction",
+    title: "View Auction",
     href: AppNavigation.ViewAuction,
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
+    description: "A modal dialog for auction listings and interaction.",
   },
   {
-    title: "Auction transaction",
+    title: "Auction Transaction",
     href: AppNavigation.TransactionRelative,
-    description:
-      "For sighted users to preview content available behind a link.",
+    description: "Handles auction-based transaction submissions.",
   },
   {
     title: "Progress",
     href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    description: "Tracks progress using visual indicators.",
   },
   {
     title: "Scroll-area",
     href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
+    description: "Scrollable areas for overflow content.",
   },
   {
     title: "Tabs",
     href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    description: "UI tabs for grouping content.",
   },
   {
     title: "Tooltip",
     href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+    description: "Hints shown on hover or focus.",
   },
 ];
+
+const stockMenuItems = [
+  {
+    title: "Introduction",
+    href: "/docs",
+    description: "Overview of the stock module.",
+  },
+  {
+    title: "Installation",
+    href: "/docs/installation",
+    description: "How to install and set up stock features.",
+  },
+  {
+    title: "Typography",
+    href: "/docs/primitives/typography",
+    description: "Style text in your stock-related content.",
+  },
+];
+
 export default function NavMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
+        {/* Stock Menu */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Stock</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -63,51 +78,40 @@ export default function NavMenu() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href={AppNavigation.ViewStock}
                   >
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      View Stock
-                    </div>
+                    <div className="mb-2 mt-4 text-lg font-medium">View Stock</div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
+                      View and manage available stock details.
                     </p>
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Introduction">
-                some things
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                somee things
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                some things
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Aution</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
+              {stockMenuItems.map((item) => (
+                <ListItem key={item.title} {...item} />
               ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
+        {/* Auction Menu */}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Auction</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {auctionMenuItems.map((item) => (
+                <ListItem key={item.title} {...item} />
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        {/* Add Car Details Link */}
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
             <Link
               to={AppNavigation.Home}
               className={navigationMenuTriggerStyle()}
             >
-              Add car Details
+              Add Car Details
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
@@ -115,27 +119,27 @@ export default function NavMenu() {
     </NavigationMenu>
   );
 }
+
 const ListItem = React.forwardRef(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-              className
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-              {children}
-            </p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    );
-  }
+  ({ className, title, description, href, ...props }, ref) => (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          href={href}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {description}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
 );
 ListItem.displayName = "ListItem";
