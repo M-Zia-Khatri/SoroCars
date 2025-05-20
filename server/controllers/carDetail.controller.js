@@ -38,7 +38,6 @@ export const getCarDetail = async (req, res) => {
         ],
       });
     }
-    console.log(cars)
     if (cars.length === 0)
       return res.status(404).json({ message: "Not found Car" });
 
