@@ -1,6 +1,6 @@
+// components/ViewTable/ViewTable.jsx
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-
 import {
   Table,
   TableBody,
@@ -9,25 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { APIUrls } from "@/constants/urlConstants";
+import { fetchCars } from "@/API/cars";
 
 // Fetch cars data and filter by sale_type
 
 export default function ViewTable({ val, saleType }) {
-  const fetchCars = async ({ queryKey }) => {
-    const [_key, saleType] = queryKey;
-
-    const response = await fetch(
-      `${APIUrls.CARS_DETAILS_URL}/?sale_type=${saleType}${`&search=${val}`}`
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch cars");
-    }
-
-    return response.json(); // Expected to return an array
-  };
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["cars-details", saleType, val],
     queryFn: fetchCars,

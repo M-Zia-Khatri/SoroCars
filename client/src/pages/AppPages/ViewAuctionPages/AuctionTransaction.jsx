@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { APIUrls } from "@/constants/urlConstants";
 import CarSelector from "@/components/AuctionTransaction/carSelector";
 import TransactionForm from "@/components/AuctionTransaction/TransactionForm";
 import TransactionHistory from "@/components/AuctionTransaction/TransactionHistory";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { addAuctionTransaction } from "@/API/transactions";
 
 export default function AuctionTransaction() {
   const [value, setValue] = useState("");
@@ -39,19 +39,8 @@ export default function AuctionTransaction() {
         Credit_Debit: data.transactionType,
       };
 
-      const res = await fetch(APIUrls.AUCTION_TRANSACTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      await addAuctionTransaction(payload);
 
-      if (!res.ok) {
-        throw new Error("Failed to submit transaction");
-      }
-
-      await res.json();
       form.reset();
       setShouldAddTransaction(false);
     } catch (error) {

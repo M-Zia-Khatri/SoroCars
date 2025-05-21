@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { APIUrls } from "@/constants/urlConstants";
 import {
   Table,
   TableBody,
@@ -11,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { fetchAuctionTransactions } from "@/API/transactions";
 
 export default function TransactionHistory({ stockId }) {
   const {
@@ -20,17 +20,7 @@ export default function TransactionHistory({ stockId }) {
     error,
   } = useQuery({
     queryKey: ["auction-transactions", stockId],
-    queryFn: async () => {
-      const res = await fetch(
-        `${APIUrls.AUCTION_TRANSACTION_URL}/${
-          stockId && `?Stock_Id=${stockId}`
-        }`
-      );
-      if (!res.ok) {
-        throw new Error(`Failed to load transactions: ${res.status}`);
-      }
-      return res.json();
-    },
+    queryFn: () => fetchAuctionTransactions(stockId),
   });
 
   if (isLoading) {

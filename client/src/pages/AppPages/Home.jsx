@@ -1,10 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { AppNavigation } from "@/constants/navigationConstants";
-import { APIUrls } from "@/constants/urlConstants";
 import CarForm from "@/components/Home/CarForm";
+import { addCar } from "@/API/cars";
 
 export default function Home() {
   const form = useForm({
@@ -22,10 +21,7 @@ export default function Home() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (carData) => {
-      const res = await axios.post(APIUrls.CARS_DETAILS_URL, carData);
-      return res.data;
-    },
+    mutationFn: addCar,
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["cars"] });
       const nextUrl =
@@ -58,7 +54,11 @@ export default function Home() {
       <h2 className="text-2xl font-semibold mb-6 text-center">
         Stock Entry Form
       </h2>
-      <CarForm form={form} onSubmit={onSubmit} isSubmitting={mutation.isPending} />
+      <CarForm
+        form={form}
+        onSubmit={onSubmit}
+        isSubmitting={mutation.isPending}
+      />
     </main>
   );
 }
