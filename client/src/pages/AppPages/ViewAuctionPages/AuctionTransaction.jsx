@@ -5,7 +5,7 @@ import TransactionForm from "@/components/AuctionTransaction/TransactionForm";
 import TransactionHistory from "@/components/AuctionTransaction/TransactionHistory";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { addAuctionTransaction } from "@/API/transactions";
+import { addAuctionTransaction } from "@/api/transactions";
 
 export default function AuctionTransaction() {
   const [value, setValue] = useState("");

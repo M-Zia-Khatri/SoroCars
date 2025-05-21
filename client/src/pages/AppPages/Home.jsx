@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppNavigation } from "@/constants/navigationConstants";
 import CarForm from "@/components/Home/CarForm";
-import { addCar } from "@/API/cars";
+import { addCar } from "@/api/cars";
 
 export default function Home() {
   const form = useForm({

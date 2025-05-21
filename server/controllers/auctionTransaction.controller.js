@@ -1,6 +1,6 @@
 // controllers/auctionTransaction.controller.js
 import { Op } from "sequelize";
-import { AuctionTransaction } from "../models/index.js";
+import { AuctionTransaction, CarDetail } from "../models/index.js";
 
 export async function getAuctionTransaction(req, res) {
   try {
@@ -13,20 +13,37 @@ export async function getAuctionTransaction(req, res) {
       };
     }
 
-    const transactions = await AuctionTransaction.findAll({ where });
+    const transactions = await AuctionTransaction.findAll({
+      where,
+      include: [
+        {
+          model: CarDetail,
+          as: "Car", // <-- use the exact alias here
+          attributes: ["Agency"],
+        },
+      ],
+    });
 
     if (!transactions || transactions.length === 0) {
       return res.status(404).json({ error: "No transactions found" });
     }
 
-    return res.status(200).json(transactions);
+    const totalAmount = transactions.reduce(
+      (acc, curr) => acc + (Number(curr.Amount) || 0),
+      0
+    );
+
+    return res.status(200).json({
+      total: totalAmount,
+      transactions,
+    });
   } catch (err) {
     console.error("Error fetching auction transactions:", err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
-// 
+//
 export async function createAuctionTransaction(req, res) {
   try {
     const { Stock_Id, Amount, User_Id, Credit_Debit } = req.body;

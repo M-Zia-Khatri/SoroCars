@@ -1,4 +1,3 @@
-// components/ViewTable/ViewTable.jsx
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -9,12 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchCars } from "@/API/cars";
-
-// Fetch cars data and filter by sale_type
+import { fetchCars } from "@/api/cars";
 
 export default function ViewTable({ val, saleType }) {
-  const { data, isLoading, isError } = useQuery({
+  const {
+    data = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["cars-details", saleType, val],
     queryFn: fetchCars,
     enabled: !!saleType,
@@ -25,10 +26,11 @@ export default function ViewTable({ val, saleType }) {
     return <div className="p-4 text-red-500">Failed to load data.</div>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">
+    <div className="p-4 space-y-4">
+      <h2 className="text-xl font-semibold">
         Car Details (Sale Type: <span className="capitalize">{saleType}</span>)
       </h2>
+
       <Table>
         <TableHeader>
           <TableRow>
@@ -40,28 +42,29 @@ export default function ViewTable({ val, saleType }) {
             <TableHead>Amount</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Sale Type</TableHead>
-            <TableHead>Ajency</TableHead>
+            <TableHead>Agency</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
-          {Array.isArray(data) && data.length > 0 ? (
+          {data.length > 0 ? (
             data.map((item, index) => (
-              <TableRow key={item.id || index}>
+              <TableRow key={item.id ?? index}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{item.User.Name || "-"}</TableCell>
-                <TableCell>{item.Invoice_Id || "-"}</TableCell>
-                <TableCell>{item.Stock_Id || "-"}</TableCell>
-                <TableCell>{item.Adjustment || "-"}</TableCell>
-                <TableCell>{item.Amount || "-"}</TableCell>
-                <TableCell>{item.Status || "-"}</TableCell>
-                <TableCell>{item.Sale_type || "-"}</TableCell>
-                <TableCell>{item.Agency || "-"}</TableCell>
+                <TableCell>{item?.User?.Name ?? "-"}</TableCell>
+                <TableCell>{item?.Invoice_Id ?? "-"}</TableCell>
+                <TableCell>{item?.Stock_Id ?? "-"}</TableCell>
+                <TableCell>{item?.Adjustment ?? "-"}</TableCell>
+                <TableCell>{item?.Amount ?? "-"}</TableCell>
+                <TableCell>{item?.Status ?? "-"}</TableCell>
+                <TableCell>{item?.Sale_type ?? "-"}</TableCell>
+                <TableCell>{item?.Agency ?? "-"}</TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
               <TableCell
-                colSpan={8}
+                colSpan={9}
                 className="text-center text-muted-foreground"
               >
                 No data found

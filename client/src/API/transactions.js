@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../services/axiosInstance";
 import { APIUrls } from "@/constants/urlConstants";
 
 export const addAuctionTransaction = async (payload) => {

@@ -2,7 +2,6 @@
 import React, { useState, useMemo } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { APIUrls } from "@/constants/urlConstants";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,8 +17,9 @@ import {
   CommandGroup,
   CommandItem,
 } from "@/components/ui/command";
+import { fetchCars } from "@/api/cars";
 
-export default function CarSelector({ value, onChange, resetForm  }) {
+export default function CarSelector({ value, onChange, resetForm }) {
   const [open, setOpen] = useState(false);
 
   const {
@@ -28,16 +28,16 @@ export default function CarSelector({ value, onChange, resetForm  }) {
     error,
   } = useQuery({
     queryKey: ["car-details"],
-    queryFn: async () => {
-      const res = await fetch(APIUrls.CARS_DETAILS_URL);
-      if (!res.ok) throw new Error("Failed to load cars");
-      return res.json();
-    },
+    queryFn: fetchCars,
   });
 
+  const filteredCars = useMemo(() => {
+    return cars.filter((car) => car.Sale_type === "Auction");
+  }, [cars]);
+
   const items = useMemo(
-    () => cars.map((car) => ({ label: car.Stock_Id, value: car.Stock_Id })),
-    [cars]
+    () => filteredCars.map((car) => ({ label: car.Stock_Id, value: car.Stock_Id })),
+    [filteredCars]
   );
 
   const selectedLabel = useMemo(() => {

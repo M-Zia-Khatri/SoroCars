@@ -10,29 +10,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchAuctionTransactions } from "@/API/transactions";
+import { fetchAuctionTransactions } from "@/api/transactions";
 
 export default function TransactionHistory({ stockId }) {
-  const {
-    data: transactions = [],
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
+  const { data: transactions = [], isLoading } = useQuery({
     queryKey: ["auction-transactions", stockId],
     queryFn: () => fetchAuctionTransactions(stockId),
   });
 
   if (isLoading) {
     return <div className="p-4">Loading transactions…</div>;
-  }
-
-  if (isError) {
-    return <div className="p-4 text-red-500">Error: {error.message}</div>;
-  }
-
-  if (transactions.length === 0 && stockId) {
-    return <div className="p-4 text-gray-600">404: No transactions found.</div>;
   }
 
   return (
@@ -45,17 +32,34 @@ export default function TransactionHistory({ stockId }) {
             <TableHead>Stock Id</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Type</TableHead>
+            <TableHead>Agency</TableHead>
+            <TableHead>Totol</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {transactions.map((tx, idx) => (
+          {transactions?.transactions?.map((tx, idx) => (
             <TableRow key={tx.Transaction_Id ?? idx}>
               <TableCell>{idx + 1}</TableCell>
               <TableCell>{tx.Stock_Id}</TableCell>
               <TableCell>{tx.Amount}</TableCell>
               <TableCell>{tx.Credit_Debit}</TableCell>
+              <TableCell>{tx.Car.Agency}</TableCell>
             </TableRow>
           ))}
+          {transactions?.transactions?.length === 0 && stockId ? (
+            <TableRow>
+              <TableCell colSpan={5}>No transactions found.</TableCell>
+            </TableRow>
+          ) : transactions?.transactions?.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={5}>No transactions found.</TableCell>
+            </TableRow>
+          ) : (
+            <TableRow>
+              <TableCell colSpan={5}>Grand Total</TableCell>
+              <TableCell>{transactions?.total}</TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>

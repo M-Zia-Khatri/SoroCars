@@ -6,10 +6,10 @@ export default function ViewStock() {
   const [search, setSearch] = useState("");
 
   return (
-    <>
-      <div className="text-xl font-semibold mb-2">View Stock</div>
+    <div className="space-y-4">
+      <h2 className="text-xl font-semibold">View Stock</h2>
       <SearchInput onChange={(val) => setSearch(val)} />
       <ViewTable val={search} saleType="Stock" />
-    </>
+    </div>
   );
 }

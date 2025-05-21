@@ -1,6 +1,6 @@
 // src/api/cars.js
 import { APIUrls } from "@/constants/urlConstants";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../services/axiosInstance";
 
 // Fetch cars with optional filters like sale_type or search term
 export const fetchCars = async ({ queryKey }) => {
