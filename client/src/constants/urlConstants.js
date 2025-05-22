@@ -3,4 +3,5 @@ export const APIUrls = {
   CARS_DETAILS_URL: "cars-details",
   USER_URL: "users",
   AUCTION_TRANSACTION_URL: "auction-transaction",
+  STOCK_INVOICE: "stock-invoice",
 };

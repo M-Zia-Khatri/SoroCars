@@ -1,3 +1,4 @@
+// server/models/index.js
 import CarDetail from "./CarDetail.model.js";
 import User from "./User.model.js";
 import AuctionTransaction from "./AuctionTransaction.model.js";

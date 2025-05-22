@@ -30,9 +30,12 @@ export default function TransactionHistory({ stockId }) {
           <TableRow>
             <TableHead>S.No</TableHead>
             <TableHead>Stock Id</TableHead>
+            <TableHead>Transaction Id</TableHead>
+            <TableHead>Transaction Invoice Id</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Agency</TableHead>
+            <TableHead>Date</TableHead>
             <TableHead>Totol</TableHead>
           </TableRow>
         </TableHeader>
@@ -40,10 +43,13 @@ export default function TransactionHistory({ stockId }) {
           {transactions?.transactions?.map((tx, idx) => (
             <TableRow key={tx.Transaction_Id ?? idx}>
               <TableCell>{idx + 1}</TableCell>
+              <TableCell>{tx.Transaction_Id}</TableCell>
+              <TableCell>{tx.Transaction_Invoice_Id}</TableCell>
               <TableCell>{tx.Stock_Id}</TableCell>
               <TableCell>{tx.Amount}</TableCell>
               <TableCell>{tx.Credit_Debit}</TableCell>
               <TableCell>{tx.Car.Agency}</TableCell>
+              <TableCell>{tx.Transaction_Date}</TableCell>
             </TableRow>
           ))}
           {transactions?.transactions?.length === 0 && stockId ? (
@@ -56,7 +62,7 @@ export default function TransactionHistory({ stockId }) {
             </TableRow>
           ) : (
             <TableRow>
-              <TableCell colSpan={5}>Grand Total</TableCell>
+              <TableCell colSpan={8} className="taxt-Center">Grand Total</TableCell>
               <TableCell>{transactions?.total}</TableCell>
             </TableRow>
           )}

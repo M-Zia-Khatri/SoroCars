@@ -6,10 +6,22 @@ import User from './User.model.js';
 
 const AuctionTransaction = sequelize.define(
   'Auction_Transaction', {
-    Transaction_Id: {
+    Auction_Transaction_Id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+    },
+    Transaction_Id: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    Transaction_Invoice_Id : {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    Transaction_Date: {
+      type: DataTypes.DATE,
+      allowNull: false,
     },
     Stock_Id: {
       type: DataTypes.STRING(50),

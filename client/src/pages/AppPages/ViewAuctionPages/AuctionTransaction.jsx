@@ -15,8 +15,11 @@ export default function AuctionTransaction() {
 
   const form = useForm({
     defaultValues: {
+      Transaction_Id: "",
+      Transaction_Invoice_Id: "",
+      Transaction_Date: "",
       transactionType: "",
-      amount: "",
+      amount: 0,
     },
   });
 
@@ -32,12 +35,18 @@ export default function AuctionTransaction() {
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
+      console.log(data);
 
       const payload = {
         Stock_Id: value,
         Amount: Number(data.amount),
         Credit_Debit: data.transactionType,
+        Transaction_Id: data.Transaction_Id,
+        Transaction_Invoice_Id: data.Transaction_Invoice_Id,
+        Transaction_Date: data.Transaction_Date,
       };
+
+      console.log(payload);
 
       await addAuctionTransaction(payload);
 

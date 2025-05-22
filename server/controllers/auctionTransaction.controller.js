@@ -46,25 +46,33 @@ export async function getAuctionTransaction(req, res) {
 //
 export async function createAuctionTransaction(req, res) {
   try {
-    const { Stock_Id, Amount, User_Id, Credit_Debit } = req.body;
-    if (!Stock_Id || Amount == null || !Credit_Debit) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    // Optional: you could validate that User_Id exists or default to null
-    const newTransaction = await AuctionTransaction.create({
+    const {
+      Transaction_Id,
+      Transaction_Invoice_Id,
+      Transaction_Date,
       Stock_Id,
       Amount,
       Credit_Debit,
-      User_Id: User_Id || null,
+      User_Id,
+    } = req.body;
+
+    if (!Transaction_Id || !Transaction_Invoice_Id || !Transaction_Date) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const newTransaction = await AuctionTransaction.create({
+      Transaction_Id,
+      Transaction_Invoice_Id,
+      Transaction_Date,
+      Stock_Id,
+      Amount,
+      Credit_Debit,
+      User_Id,
     });
 
-    res.status(201).json({
-      message: "Auction transaction created successfully",
-      data: newTransaction,
-    });
+    return res.status(201).json(newTransaction);
   } catch (err) {
     console.error("Error creating auction transaction:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }

@@ -4,6 +4,7 @@ import Home from "@/pages/AppPages/Home";
 import AuthenticatedAppRoot from "@/pages/AppPages/Layout/AuthenticatedAppRoot";
 import AuctionTransaction from "@/pages/AppPages/ViewAuctionPages/AuctionTransaction";
 import ViewAuction from "@/pages/AppPages/ViewAuctionPages/ViewAuction";
+import StockInvoice from "@/pages/AppPages/ViewStockPages/StockInvoice";
 import ViewStock from "@/pages/AppPages/ViewStockPages/ViewStock";
 import { Navigate } from "react-router-dom";
 
@@ -21,6 +22,10 @@ const AppRoutes = [
       {
         path: AppNavigation.TransactionRelative, // <-- Relative path
         element: <AuctionTransaction />,
+      },
+      {
+        path: AppNavigation.STOCK_INVOICE, // <-- Relative path
+        element: <StockInvoice />,
       },
     ],
   },
