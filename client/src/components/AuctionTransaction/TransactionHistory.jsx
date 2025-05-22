@@ -40,30 +40,37 @@ export default function TransactionHistory({ stockId }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {transactions?.transactions?.map((tx, idx) => (
-            <TableRow key={tx.Transaction_Id ?? idx}>
-              <TableCell>{idx + 1}</TableCell>
-              <TableCell>{tx.Transaction_Id}</TableCell>
-              <TableCell>{tx.Transaction_Invoice_Id}</TableCell>
-              <TableCell>{tx.Stock_Id}</TableCell>
-              <TableCell>{tx.Amount}</TableCell>
-              <TableCell>{tx.Credit_Debit}</TableCell>
-              <TableCell>{tx.Car.Agency}</TableCell>
-              <TableCell>{tx.Transaction_Date}</TableCell>
-            </TableRow>
-          ))}
-          {transactions?.transactions?.length === 0 && stockId ? (
-            <TableRow>
-              <TableCell colSpan={5}>No transactions found.</TableCell>
-            </TableRow>
-          ) : transactions?.transactions?.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={5}>No transactions found.</TableCell>
-            </TableRow>
+          {transactions?.transactions?.length > 0 ? (
+            <>
+              {transactions.transactions.map((tx, idx) => (
+                <TableRow key={tx.Transaction_Id ?? idx}>
+                  <TableCell>{idx + 1}</TableCell>
+                  <TableCell>{tx.Transaction_Id}</TableCell>
+                  <TableCell>{tx.Transaction_Invoice_Id}</TableCell>
+                  <TableCell>{tx.Stock_Id}</TableCell>
+                  <TableCell>{tx.Amount}</TableCell>
+                  <TableCell>{tx.Credit_Debit}</TableCell>
+                  <TableCell>{tx.Car.Agency}</TableCell>
+                  <TableCell>{tx.Transaction_Date}</TableCell>
+                </TableRow>
+              ))}
+
+              {/* Grand Total Row */}
+              <TableRow>
+                <TableCell colSpan={7} className="text-right font-semibold">
+                  Grand Total
+                </TableCell>
+                <TableCell>{transactions.total}</TableCell>
+              </TableRow>
+            </>
           ) : (
             <TableRow>
-              <TableCell colSpan={8} className="taxt-Center">Grand Total</TableCell>
-              <TableCell>{transactions?.total}</TableCell>
+              <TableCell
+                colSpan={8}
+                className="text-center text-muted-foreground"
+              >
+                No transactions found.
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

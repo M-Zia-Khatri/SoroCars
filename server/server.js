@@ -5,6 +5,7 @@ import carDetailRouter from "./routes/carsDetail.router.js";
 import sequelize from "./config/db.connection.js";
 import userRouter from "./routes/user.router.js";
 import auctionTransactionRouter from "./routes/auctionTransaction.router.js";
+import carCalculationRouter from "./routes/carCalculation.router.js";
 dotenv.config();
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", userRouter);
 app.use("/api/cars-details", carDetailRouter);
 app.use("/api/auction-transaction", auctionTransactionRouter);
+app.use("/api/car-calculation", carCalculationRouter);
 
 sequelize
   .authenticate()

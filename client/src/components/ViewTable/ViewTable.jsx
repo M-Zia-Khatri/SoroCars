@@ -1,5 +1,4 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -8,23 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchCars } from "@/api/cars";
 
-export default function ViewTable({ val, saleType }) {
-  const {
-    data = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["cars-details", saleType, val],
-    queryFn: fetchCars,
-    enabled: !!saleType,
-  });
-
-  if (isLoading) return <div className="p-4">Loading...</div>;
-  if (isError)
-    return <div className="p-4 text-red-500">Failed to load data.</div>;
-
+export default function ViewTable({ data, saleType, THColums }) {
   return (
     <div className="p-4 space-y-4">
       <h2 className="text-xl font-semibold">
@@ -35,19 +19,38 @@ export default function ViewTable({ val, saleType }) {
         <TableHeader>
           <TableRow>
             <TableHead>S.No</TableHead>
-            <TableHead>Agent Name</TableHead>
-            <TableHead>Invoice Id</TableHead>
-            <TableHead>Stock Id</TableHead>
-            <TableHead>Adjustment</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Sale Type</TableHead>
-            <TableHead>Agency</TableHead>
+            {THColums.map((item, index) => (
+              <TableHead key={index}>{item}</TableHead>
+            ))}
           </TableRow>
         </TableHeader>
-
+        {console.log(data)}
         <TableBody>
-          {data.length > 0 ? (
+          {saleType === "Stock Invoice" && data?.cars?.length > 0 ? (
+            <>
+              {data.cars.map((item, index) => (
+                <TableRow key={item.id ?? index}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{item?.Stock_Id ?? "-"}</TableCell>
+                  <TableCell>{item?.Invoice_Id ?? "-"}</TableCell>
+                  <TableCell>{item?.Status ?? "-"}</TableCell>
+                  <TableCell>{item?.Adjustment ?? "-"}</TableCell>
+                  <TableCell>{item?.Amount ?? "-"}</TableCell>
+                  <TableCell>{item?.Total ?? "-"}</TableCell>
+                </TableRow>
+              ))}
+              <TableRow>
+                <TableCell
+                  colSpan={THColums.length}
+                  className="text-center text-muted-foreground"
+                >
+                  Grand Total
+                </TableCell>
+
+                <TableCell>{data?.grandTotal ?? "-"}</TableCell>
+              </TableRow>
+            </>
+          ) : data.length > 0 ? (
             data.map((item, index) => (
               <TableRow key={item.id ?? index}>
                 <TableCell>{index + 1}</TableCell>
@@ -64,7 +67,7 @@ export default function ViewTable({ val, saleType }) {
           ) : (
             <TableRow>
               <TableCell
-                colSpan={9}
+                colSpan={THColums.length + 1}
                 className="text-center text-muted-foreground"
               >
                 No data found

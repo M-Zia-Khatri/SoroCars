@@ -47,8 +47,8 @@ const auctionMenuItems = [
 
 const stockMenuItems = [
   {
-    title: "Introduction",
-    href: "/docs",
+    title: "Stock Invoice",
+    href: AppNavigation.STOCK_INVOICE,
     description: "Overview of the stock module.",
   },
   {
@@ -78,7 +78,9 @@ export default function NavMenu() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href={AppNavigation.ViewStock}
                   >
-                    <div className="mb-2 mt-4 text-lg font-medium">View Stock</div>
+                    <div className="mb-2 mt-4 text-lg font-medium">
+                      View Stock
+                    </div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       View and manage available stock details.
                     </p>

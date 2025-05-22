@@ -16,6 +16,20 @@ export const fetchCars = async ({ queryKey }) => {
   return response.data;
 };
 
+export const fetchCarsCalculation = async ({ queryKey }) => {
+  const [_key, doller] = queryKey;
+  try {
+    const response = await axiosInstance.get(APIUrls.CARS_CALCULATION_URL, {
+      params: { doller: parseFloat(doller) || 0 },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching car calculation:", error);
+    throw error; // Let React Query handle the error
+  }
+};
+
 // Add a new car
 export const addCar = async (carData) => {
   const response = await axiosInstance.post(APIUrls.CARS_DETAILS_URL, carData);

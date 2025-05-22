@@ -2,6 +2,7 @@
 import { AppNavigation } from "@/constants/navigationConstants";
 import Home from "@/pages/AppPages/Home";
 import AuthenticatedAppRoot from "@/pages/AppPages/Layout/AuthenticatedAppRoot";
+import Settings from "@/pages/AppPages/Settings";
 import AuctionTransaction from "@/pages/AppPages/ViewAuctionPages/AuctionTransaction";
 import ViewAuction from "@/pages/AppPages/ViewAuctionPages/ViewAuction";
 import StockInvoice from "@/pages/AppPages/ViewStockPages/StockInvoice";
@@ -26,6 +27,10 @@ const AppRoutes = [
       {
         path: AppNavigation.STOCK_INVOICE, // <-- Relative path
         element: <StockInvoice />,
+      },
+      {
+        path: AppNavigation.Setting, // <-- Relative path
+        element: <Settings />,
       },
     ],
   },
