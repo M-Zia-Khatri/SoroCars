@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { setItem } from "@/services/storageService";
 
 export default function Settings() {
   const { setDollerValue } = useSetting();
@@ -22,7 +23,7 @@ export default function Settings() {
         alert("Please enter a valid number");
         return;
       }
-      localStorage.setItem("doller", parsed);
+      setItem("doller", parsed);
       setDollerValue(parsed);
       location.href = "/";
     } catch (error) {

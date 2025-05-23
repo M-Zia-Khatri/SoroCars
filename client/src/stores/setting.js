@@ -1,13 +1,13 @@
+import { getItem } from "@/services/storageService";
 import { create } from "zustand";
 
 const useSetting = create((set) => {
   // Get initial dollar value from localStorage
-  const initialDollar = parseFloat(localStorage.getItem("doller")) || 0;
+  const initialDollar = parseFloat(getItem("doller")) || 0;
 
   return {
     DollerValue: initialDollar,
-    setDollerValue: (value) =>
-      set({ DollerValue: parseFloat(value) || 0 }),
+    setDollerValue: (value) => set({ DollerValue: parseFloat(value) || 0 }),
   };
 });
 
