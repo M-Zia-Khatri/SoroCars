@@ -4,5 +4,4 @@ export const AppNavigation = {
   ViewStock: "/view-stock",
   TransactionRelative: "/auction-transaction",
   STOCK_INVOICE: "/stock-invoice", // for nested route path
-  Setting: "/setting",
 };

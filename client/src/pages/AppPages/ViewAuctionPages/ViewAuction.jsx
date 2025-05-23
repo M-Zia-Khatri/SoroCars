@@ -1,5 +1,5 @@
 import { fetchCars } from "@/api/cars";
-import SearchInput from "@/components/SearchInput/SearchInput";
+import SearchInput from "@/components/searchInput/SearchInput";
 import ViewTable from "@/components/ViewTable/ViewTable";
 import { useQuery } from "@tanstack/react-query";
 import React, { useMemo, useRef, useState } from "react";

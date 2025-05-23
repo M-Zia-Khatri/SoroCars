@@ -13,7 +13,7 @@ lerna-debug.log*
 # Node dependencies
 # =========================
 **/node_modules/
-
+/temp/
 # =========================
 # Build output
 # =========================

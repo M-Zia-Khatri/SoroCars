@@ -24,7 +24,6 @@ export default function ViewTable({ data, saleType, THColums }) {
             ))}
           </TableRow>
         </TableHeader>
-        {console.log(data)}
         <TableBody>
           {saleType === "Stock Invoice" && data?.cars?.length > 0 ? (
             <>
@@ -41,11 +40,13 @@ export default function ViewTable({ data, saleType, THColums }) {
               ))}
               <TableRow>
                 <TableCell
-                  colSpan={THColums.length}
+                  colSpan={THColums.length - 2}
                   className="text-center text-muted-foreground"
                 >
                   Grand Total
                 </TableCell>
+                <TableCell>{data?.totalAdjustmentInPKR ?? "-"}</TableCell>
+                <TableCell>{data?.totalAmount ?? "-"}</TableCell>
 
                 <TableCell>{data?.grandTotal ?? "-"}</TableCell>
               </TableRow>

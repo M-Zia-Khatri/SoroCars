@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-import SearchInput from "@/components/SearchInput/SearchInput";
+import SearchInput from "@/components/searchInput/SearchInput";
 import ViewTable from "@/components/ViewTable/ViewTable";
 import { fetchCars } from "@/api/cars";
 import { useQuery } from "@tanstack/react-query";
