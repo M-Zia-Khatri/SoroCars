@@ -10,18 +10,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchAuctionTransactions } from "@/api/transactions";
+import { fetchAuctionTransactions } from "@/API/transactions";
 
 export default function TransactionHistory({ stockId }) {
-  const { data: transactions = [], isLoading } = useQuery({
+  const {
+    data,
+    isLoading,
+  } = useQuery({
     queryKey: ["auction-transactions", stockId],
     queryFn: () => fetchAuctionTransactions(stockId),
+    retry: false,
+    cacheTime: 1000 * 60 * 5,
   });
 
   if (isLoading) {
     return <div className="p-4">Loading transactions…</div>;
   }
 
+  const { Response:{transactions, total = 0} } = data
+
+  console.log(transactions);
   return (
     <div>
       <h3 className="text-lg font-medium mb-2">Transaction History</h3>
@@ -36,13 +44,13 @@ export default function TransactionHistory({ stockId }) {
             <TableHead>Type</TableHead>
             <TableHead>Agency</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead>Totol</TableHead>
+            <TableHead>Total</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {transactions?.transactions?.length > 0 ? (
+          {transactions?.length > 0 ? (
             <>
-              {transactions.transactions.map((tx, idx) => (
+              {transactions.map((tx, idx) => (
                 <TableRow key={tx.Transaction_Id ?? idx}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{tx.Transaction_Id}</TableCell>
@@ -51,7 +59,7 @@ export default function TransactionHistory({ stockId }) {
                   <TableCell>{tx.Amount}</TableCell>
                   <TableCell>{tx.Credit_Debit}</TableCell>
                   <TableCell>{tx.Car.Agency}</TableCell>
-                  <TableCell>{tx.Transaction_Date}</TableCell>
+                  <TableCell>{tx.Transaction_Date.split("T")[0]}</TableCell>
                 </TableRow>
               ))}
 
@@ -60,7 +68,7 @@ export default function TransactionHistory({ stockId }) {
                 <TableCell colSpan={7} className="text-right font-semibold">
                   Grand Total
                 </TableCell>
-                <TableCell>{transactions.total}</TableCell>
+                <TableCell>{total}</TableCell>
               </TableRow>
             </>
           ) : (

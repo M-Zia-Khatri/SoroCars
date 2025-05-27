@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppNavigation } from "@/constants/navigationConstants";
 import CarForm from "@/components/Home/CarForm";
-import { addCar } from "@/api/cars";
+import { addCar } from "@/API/cars";
+import useAuth from "@/stores/AuthStore";
 
 export default function Home() {
+  const { userData } = useAuth();
+
   const form = useForm({
     defaultValues: {
       Stock_Id: "",
@@ -14,7 +17,7 @@ export default function Home() {
       Amount: "",
       Status: "",
       Sale_type: "",
-      Ajency: "",
+      Agency: "",
     },
   });
 
@@ -27,14 +30,13 @@ export default function Home() {
       const nextUrl =
         variables.Sale_type === "Stock"
           ? AppNavigation.ViewStock
-          : AppNavigation.ViewAution;
+          : AppNavigation.ViewAuction;
       location.href = nextUrl;
     },
     onError: (error) => {
-      console.error("Submission failed:", error.message);
+      alert(error?.response?.data?.message || "Failed to add car");
     },
   });
-
   const onSubmit = (data) => {
     const carData = {
       Stock_Id: data.Stock_Id.trim(),
@@ -43,8 +45,8 @@ export default function Home() {
       AmountSTR: data.Amount,
       Status: data.Status,
       Sale_type: data.Sale_type,
-      Ajency: data.Ajency,
-      UserId: 1,
+      Agency: data.Agency,
+      UserId: userData.userId,
     };
     mutation.mutate(carData);
   };

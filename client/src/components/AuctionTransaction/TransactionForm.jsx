@@ -10,6 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 
 export default function TransactionForm({
   form,
@@ -99,7 +107,7 @@ export default function TransactionForm({
             )}
           />
         )}
-
+        
         {/* Amount Input */}
         {transactionType && (
           <FormField
@@ -125,6 +133,8 @@ export default function TransactionForm({
             )}
           />
         )}
+        
+        {/* Transaction Date */}
         {amount && (
           <FormField
             control={control}
@@ -134,7 +144,33 @@ export default function TransactionForm({
               <FormItem>
                 <FormLabel>Transaction Date</FormLabel>
                 <FormControl>
-                  <Input type="date" {...field} />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={!field.value ? "text-muted-foreground" : ""}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {field.value
+                          ? format(new Date(field.value), "PPP")
+                          : "Pick a date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={
+                          field.value ? new Date(field.value) : undefined
+                        }
+                        onSelect={(date) => {
+                          field.onChange(
+                            date ? date.toISOString().slice(0, 10) : ""
+                          );
+                        }}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </FormControl>
                 <FormMessage />
               </FormItem>

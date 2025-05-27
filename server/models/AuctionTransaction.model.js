@@ -46,23 +46,4 @@ const AuctionTransaction = sequelize.define(
   }
 );
 
-// Define associations
-AuctionTransaction.belongsTo(CarDetail, {
-  foreignKey: 'Stock_Id',
-  as: 'car',
-});
-CarDetail.hasMany(AuctionTransaction, {
-  foreignKey: 'Stock_Id',
-  as: 'transactions',
-});
-
-AuctionTransaction.belongsTo(User, {
-  foreignKey: 'User_Id',
-  as: 'user',
-});
-User.hasMany(AuctionTransaction, {
-  foreignKey: 'User_Id',
-  as: 'transactions',
-});
-
 export default AuctionTransaction;

@@ -8,7 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function ViewTable({ data, saleType, THColums }) {
+export default function ViewTable({ data, saleType, THColumns }) {
+  console.log(data)
   return (
     <div className="p-4 space-y-4">
       <h2 className="text-xl font-semibold">
@@ -19,7 +20,7 @@ export default function ViewTable({ data, saleType, THColums }) {
         <TableHeader>
           <TableRow>
             <TableHead>S.No</TableHead>
-            {THColums.map((item, index) => (
+            {THColumns.map((item, index) => (
               <TableHead key={index}>{item}</TableHead>
             ))}
           </TableRow>
@@ -40,7 +41,7 @@ export default function ViewTable({ data, saleType, THColums }) {
               ))}
               <TableRow>
                 <TableCell
-                  colSpan={THColums.length - 2}
+                  colSpan={THColumns.length - 2}
                   className="text-center text-muted-foreground"
                 >
                   Grand Total
@@ -51,7 +52,7 @@ export default function ViewTable({ data, saleType, THColums }) {
                 <TableCell>{data?.grandTotal ?? "-"}</TableCell>
               </TableRow>
             </>
-          ) : data.length > 0 ? (
+          ) : data?.length > 0 ? (
             data.map((item, index) => (
               <TableRow key={item.id ?? index}>
                 <TableCell>{index + 1}</TableCell>
@@ -68,7 +69,7 @@ export default function ViewTable({ data, saleType, THColums }) {
           ) : (
             <TableRow>
               <TableCell
-                colSpan={THColums.length + 1}
+                colSpan={THColumns.length + 1}
                 className="text-center text-muted-foreground"
               >
                 No data found

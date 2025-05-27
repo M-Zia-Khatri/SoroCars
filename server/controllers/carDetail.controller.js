@@ -39,12 +39,12 @@ export const getCarDetail = async (req, res) => {
       });
     }
     if (cars.length === 0)
-      return res.status(404).json({ message: "Not found Car" });
+      return res.status(404).json({ success: false, message: "Not found Car" });
 
-    res.json(cars);
+    res.json({ success: true, cars });
   } catch (error) {
     console.error("Error fetching car details:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
@@ -53,7 +53,7 @@ export const createCarDetail = async (req, res) => {
     const {
       Stock_Id,
       UserId,
-      Ajency,
+      Agency,
       Sale_type,
       AmountSTR,
       Invoice_Id,
@@ -65,17 +65,39 @@ export const createCarDetail = async (req, res) => {
       !Stock_Id ||
       AmountSTR == null ||
       Sale_type == null ||
-      Ajency == null ||
+      Agency == null ||
       UserId == null
     ) {
-      return res.status(400).json({ error: "Missing required fields" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields" });
     }
 
     const Amount = Number(AmountSTR);
     const Adjustment = Number(AdjustmentSTR);
     const User_Id = Number(UserId); // Updated
     if (isNaN(User_Id) || isNaN(Adjustment) || isNaN(Amount)) {
-      return res.status(400).json({ error: "Invalid input" });
+      return res.status(400).json({ message: "Invalid input" });
+    }
+
+    const isCarExistsOnStockId = await CarDetail.findOne({
+      where: { Stock_Id },
+    });
+    if (isCarExistsOnStockId) {
+      return res.status(400).json({
+        success: false,
+        message: "Car already exists in the database with the same Stock id ",
+      });
+    }
+
+    const isCarExistsOnInvoiceId = await CarDetail.findOne({
+      where: { Invoice_Id },
+    });
+    if (isCarExistsOnInvoiceId) {
+      return res.status(400).json({
+        success: false,
+        message: "Car already exists in the database with the same Invoice id ",
+      });
     }
 
     const newCar = await CarDetail.create({
@@ -85,13 +107,17 @@ export const createCarDetail = async (req, res) => {
       Amount,
       Status,
       Sale_type,
-      Agency: Ajency, // Make sure to use correct spelling from your model
+      Agency, // Make sure to use correct spelling from your model
       User_Id, // Correct field name
     });
 
-    res.status(201).json({ message: "Car detail created", data: newCar });
+    res
+      .status(201)
+      .json({ success: true, message: "Car detail created", data: newCar });
   } catch (err) {
     console.error("Error creating car details:", err);
-    res.status(500).json({ error: "Failed to create car details" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to create car details" });
   }
 };

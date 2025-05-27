@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
 
 export default async function auth(req, res, next) {
+
   const token = (req.headers?.authorization ?? "").trim();
   if (!token) {
     return res.status(401).json({
@@ -24,6 +25,7 @@ export default async function auth(req, res, next) {
     req.user = user;
     next();
   } catch (err) {
+    console.log("Error in auth middleware",err);
     switch (err.name) {
       case "JsonWebTokenError":
         res.status(401).json({
@@ -32,6 +34,7 @@ export default async function auth(req, res, next) {
         });
         break;
       default:
+        console.error("Error in auth middleware",err);
         res.status(500).json({
           success: false,
           message: "Internal Server Error",

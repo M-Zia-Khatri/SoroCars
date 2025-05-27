@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import SearchInput from "@/components/searchInput/SearchInput";
 import ViewTable from "@/components/ViewTable/ViewTable";
-import { fetchCars } from "@/api/cars";
+import { fetchCars } from "@/API/cars";
 import { useQuery } from "@tanstack/react-query";
 
 export default function ViewStock() {
@@ -9,7 +9,7 @@ export default function ViewStock() {
   const [search, setSearch] = useState("");
 
   const saleType = useMemo(() => "Stock", []);
-  const THColums = useMemo(
+  const THColumns = useMemo(
     () => [
       "Agent Name",
       "Invoice Id",
@@ -23,7 +23,7 @@ export default function ViewStock() {
     []
   );
 
-  const { data = [], isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["cars-details", saleType, search],
     queryFn: fetchCars,
     enabled: !!saleType,
@@ -40,7 +40,9 @@ export default function ViewStock() {
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">View Stock</h2>
 
-      <div className="flex items-center gap-2">
+      <div
+        className={`flex items-center gap-2 ${isError ? "hidden" : "block"}`}
+      >
         <SearchInput inputRef={inputRef} />
         <button
           onClick={handleSearch}
@@ -49,8 +51,7 @@ export default function ViewStock() {
           Search
         </button>
       </div>
-
-      <ViewTable THColums={THColums} data={data} saleType={saleType} />
+      <ViewTable THColumns={THColumns} data={data?.cars} saleType={saleType} />
     </div>
   );
 }

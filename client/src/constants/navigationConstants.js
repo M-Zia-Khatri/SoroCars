@@ -5,3 +5,7 @@ export const AppNavigation = {
   TransactionRelative: "/auction-transaction",
   STOCK_INVOICE: "/stock-invoice", // for nested route path
 };
+
+export const AuthNavigation = {
+  Login: "/login",
+};

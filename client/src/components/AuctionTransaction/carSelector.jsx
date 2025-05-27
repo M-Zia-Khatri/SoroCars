@@ -17,13 +17,17 @@ import {
   CommandGroup,
   CommandItem,
 } from "@/components/ui/command";
-import { fetchCars } from "@/api/cars";
+import { fetchCars } from "@/API/cars";
 
-export default function CarSelector({ value, onChange, resetForm }) {
+export default function CarSelector({
+  value,
+  onChange,
+  resetForm,
+}) {
   const [open, setOpen] = useState(false);
 
   const {
-    data: cars = [],
+    data = [],
     isLoading,
     error,
   } = useQuery({
@@ -32,16 +36,20 @@ export default function CarSelector({ value, onChange, resetForm }) {
   });
 
   const filteredCars = useMemo(() => {
-    return cars.filter((car) => car.Sale_type === "Auction");
-  }, [cars]);
+    return data?.cars?.filter((car) => car.Sale_type === "Auction");
+  }, [data.cars]);
 
   const items = useMemo(
-    () => filteredCars.map((car) => ({ label: car.Stock_Id, value: car.Stock_Id })),
+    () =>
+      filteredCars?.map((car) => ({
+        label: car.Stock_Id,
+        value: car.Stock_Id,
+      })),
     [filteredCars]
   );
 
   const selectedLabel = useMemo(() => {
-    const found = items.find((i) => i.value === value);
+    const found = items?.find((i) => i.value === value);
     return found ? found.label : "Select a car…";
   }, [value, items]);
 

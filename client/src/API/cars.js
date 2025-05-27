@@ -17,10 +17,10 @@ export const fetchCars = async ({ queryKey }) => {
 };
 
 export const fetchCarsCalculation = async ({ queryKey }) => {
-  const [_key, doller] = queryKey;
+  const [_key, dollar] = queryKey;
   try {
     const response = await axiosInstance.get(APIUrls.CARS_CALCULATION_URL, {
-      params: { doller: parseFloat(doller) || 0 },
+      params: { dollar: parseFloat(dollar) || 0 },
     });
 
     return response.data;

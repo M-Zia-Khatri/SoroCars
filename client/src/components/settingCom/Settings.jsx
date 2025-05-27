@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useSetting from "@/stores/setting";
+import useSetting from "@/stores/settingStore";
 import {
   Sheet,
   SheetTrigger,
@@ -11,9 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { setItem } from "@/services/storageService";
+import { StorageConst } from "@/constants/storageConstants";
 
 export default function Settings() {
-  const { setDollerValue } = useSetting();
+  const { setDollarValue } = useSetting();
   const [value, setValue] = useState("");
 
   const onSave = () => {
@@ -23,8 +24,8 @@ export default function Settings() {
         alert("Please enter a valid number");
         return;
       }
-      setItem("doller", parsed);
-      setDollerValue(parsed);
+      setItem(StorageConst.Dollar, parsed);
+      setDollarValue(parsed);
       location.href = "/";
     } catch (error) {
       console.error("Failed to save dollar value:", error);

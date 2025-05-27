@@ -32,8 +32,8 @@ export default function CarForm({ form, onSubmit, isSubmitting }) {
         />
 
         <RadioInputGroup
-          name="Ajency"
-          label="Ajency"
+          name="Agency"
+          label="Agency"
           options={["AA-Japan", "Durrani"]}
           form={form}
         />

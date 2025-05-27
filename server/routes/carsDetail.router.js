@@ -8,7 +8,7 @@ import {
 const carDetailRouter = express.Router();
 
 carDetailRouter
-  .get("/", getCarDetail) // getCarDetail should internally handle query params
+  .get("/", getCarDetail)
   .post("/", createCarDetail);
 
 export default carDetailRouter;

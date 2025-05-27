@@ -25,7 +25,9 @@ export async function getAuctionTransaction(req, res) {
     });
 
     if (!transactions || transactions.length === 0) {
-      return res.status(404).json({ error: "No transactions found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "No transactions found" });
     }
 
     const totalAmount = transactions.reduce(
@@ -34,12 +36,18 @@ export async function getAuctionTransaction(req, res) {
     );
 
     return res.status(200).json({
-      total: totalAmount,
-      transactions,
+      success: true,
+      message: "Auction transactions fetched successfully",
+      Response: {
+        total: totalAmount,
+        transactions,
+      },
     });
   } catch (err) {
     console.error("Error fetching auction transactions:", err);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 }
 
@@ -57,7 +65,9 @@ export async function createAuctionTransaction(req, res) {
     } = req.body;
 
     if (!Transaction_Id || !Transaction_Invoice_Id || !Transaction_Date) {
-      return res.status(400).json({ error: "Missing required fields" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields" });
     }
 
     const newTransaction = await AuctionTransaction.create({
@@ -70,9 +80,15 @@ export async function createAuctionTransaction(req, res) {
       User_Id,
     });
 
-    return res.status(201).json(newTransaction);
+    return res.status(201).json({
+      success: true,
+      message: "Auction transaction created successfully",
+      newTransaction,
+    });
   } catch (err) {
     console.error("Error creating auction transaction:", err);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 }

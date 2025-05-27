@@ -1,4 +1,4 @@
-import { fetchCars } from "@/api/cars";
+import { fetchCars } from "@/API/cars";
 import SearchInput from "@/components/searchInput/SearchInput";
 import ViewTable from "@/components/ViewTable/ViewTable";
 import { useQuery } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ export default function ViewAuction() {
   const [search, setSearch] = useState("");
 
   const saleType = useMemo(() => "Auction", []);
-  const THColums = useMemo(
+  const THColumns = useMemo(
     () => [
       "Agent Name",
       "Invoice Id",
@@ -47,7 +47,7 @@ export default function ViewAuction() {
         </button>
       </div>
 
-      <ViewTable data={data} saleType={"Auction"} THColums={THColums} />
+      <ViewTable data={data?.cars} saleType={"Auction"} THColumns={THColumns} />
     </>
   );
 }

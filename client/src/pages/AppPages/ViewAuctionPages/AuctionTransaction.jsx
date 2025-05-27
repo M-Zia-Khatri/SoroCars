@@ -5,7 +5,7 @@ import TransactionForm from "@/components/AuctionTransaction/TransactionForm";
 import TransactionHistory from "@/components/AuctionTransaction/TransactionHistory";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { addAuctionTransaction } from "@/api/transactions";
+import { addAuctionTransaction } from "@/API/transactions";
 
 export default function AuctionTransaction() {
   const [value, setValue] = useState("");
@@ -19,7 +19,7 @@ export default function AuctionTransaction() {
       Transaction_Invoice_Id: "",
       Transaction_Date: "",
       transactionType: "",
-      amount: 0,
+      amount: null,
     },
   });
 
@@ -60,7 +60,7 @@ export default function AuctionTransaction() {
   };
 
   return (
-    <>
+    <main>
       <div className="flex items-center gap-4 mb-4">
         <Button
           onClick={() => {
@@ -101,6 +101,6 @@ export default function AuctionTransaction() {
       )}
 
       {!shouldAddTransaction && <TransactionHistory stockId={value} />}
-    </>
+    </main>
   );
 }

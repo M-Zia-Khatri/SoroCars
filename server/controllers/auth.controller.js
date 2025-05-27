@@ -4,38 +4,51 @@ import User from "../models/User.model.js";
 
 export async function login(req, res) {
   try {
-    const { email, password } = req.body ?? {};
+    const { Email, Password } = req.body ?? {};
 
-    if (!email) {
-      return res.status(400).json({ error: "Email is Required" });
+    if (!Email) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email is Required" });
     }
-    if (!password) {
-      return res.status(400).json({ error: "Password is Required" });
+    if (!Password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Password is Required" });
     }
-    const user = await User.findOne({ where: { Email: email } });
+    const user = await User.findOne({ where: { Email } });
     if (!user) {
-      return res.status(404).json({ error: "User Not Found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User Not Found" });
     }
 
-    const isPasswordSame = await bcrypt.compare(password, user.Password);
+    const isPasswordSame = await bcrypt.compare(Password, user.Password);
     if (!isPasswordSame) {
-      return res.status(401).json({ error: "Invalid Credentials" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid Credentials" });
     }
 
     const jwtToken = jwt.sign(
       { email: user.Email, id: user.User_Id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" } // Token expires in 1 hour if user closes the website
+      { expiresIn: "2h" } // Token expires in 2 hour if user closes the website
     );
 
     res.json({
-      email: user.Email,
-      name: user.Name,
-      role: user.Role,
-      token: jwtToken,
+      success: true,
+      message: "Login Successful",
+      data: {
+        email: user.Email,
+        name: user.Name,
+        role: user.Role,
+        userId: user.User_Id,
+        token: jwtToken,
+      },
     });
   } catch (err) {
-    console.error(err);
+    console.error("Error in login", err);
     res.status(500).json({
       success: false,
       message: "Internal Server Error",

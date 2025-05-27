@@ -1,10 +1,10 @@
 import { CarDetail, User } from "../models/index.js";
 
 export const calculateStock = async (req, res) => {
-  const doller = parseFloat(req.query.doller);
+  const dollar = parseFloat(req.query.dollar);
 
-  if (isNaN(doller)) {
-    return res.status(400).json({ message: "Invalid doller value" });
+  if (isNaN(dollar)) {
+    return res.status(400).json({ success: false, message: "Invalid dollar value" });
   }
 
   try {
@@ -29,7 +29,7 @@ export const calculateStock = async (req, res) => {
       0
     );
 
-    const totalAdjustmentInPKR = totalAdjustmentUsd * doller;
+    const totalAdjustmentInPKR = totalAdjustmentUsd * dollar;
 
     const result = cars.map((car) => {
       const plainCar = car.get({ plain: true });
@@ -37,7 +37,7 @@ export const calculateStock = async (req, res) => {
       const amount = Number(plainCar.Amount) || 0;
       return {
         ...plainCar,
-        Total: amount + adjustment * doller,
+        Total: amount + adjustment * dollar,
       };
     });
 
@@ -51,7 +51,7 @@ export const calculateStock = async (req, res) => {
     });
   } catch (error) {
     console.error("Error calculating car stock:", error);
-    return res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
