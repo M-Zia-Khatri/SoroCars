@@ -124,3 +124,89 @@ export const createCarDetail = async (req, res) => {
       .json({ success: false, message: "Failed to create car details" });
   }
 };
+
+export const updateCarDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      Stock_Id,
+      Invoice_Id,
+      Adjustment,
+      Amount,
+      Status,
+      Sale_type,
+      Agency,
+      User_Id,
+      AgentName,
+    } = req.body;
+
+    if (!id || !Stock_Id || !Invoice_Id || !Adjustment || !Amount) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields" });
+    }
+    console.log("test here", req.body);
+    if (isNaN(User_Id) || isNaN(Adjustment) || isNaN(Amount)) {
+      return res.status(400).json({ message: "Invalid input" });
+    }
+
+    const carDetail = await CarDetail.findByPk(id);
+    if (!carDetail) {
+      return res.status(404).json({ success: false, message: "Car not found" });
+    }
+
+    const updateFields = {
+      Stock_Id,
+      Invoice_Id,
+      Adjustment,
+      Amount,
+      Status,
+      Sale_type,
+      Agency,
+      User_Id,
+      AgentName,
+    };
+    Object.keys(updateFields).forEach(
+      (key) => updateFields[key] === undefined && delete updateFields[key]
+    );
+
+    await carDetail.update(updateFields);
+
+    res.json({
+      success: true,
+      message: "Car detail updated successfully",
+      data: carDetail,
+    });
+  } catch (err) {
+    console.error("Error updating car details:", err);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update car details" });
+  }
+};
+
+export const deleteCarDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "ID is required" });
+    }
+
+    const carDetail = await CarDetail.findByPk(id);
+    if (!carDetail) {
+      return res.status(404).json({ success: false, message: "Car not found" });
+    }
+
+    await carDetail.destroy();
+
+    res.json({ success: true, message: "Car detail deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting car details:", err);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to delete car details" });
+  }
+};
