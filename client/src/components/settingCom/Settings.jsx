@@ -35,44 +35,50 @@ export default function Settings() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="text-sm text-gray-500 border px-3 py-1 rounded">
+        <Button
+          className="text-sm text-black border px-3 py-1 rounded"
+          variant="outline"
+        >
           Open Settings
         </Button>
       </SheetTrigger>
+
       <SheetContent className="max-w-sm w-full flex flex-col gap-6">
         <SheetHeader>
-          <SheetTitle className="text-xl font-bold text-gray-800">
+          <SheetTitle className="text-xl font-bold text-gray-900">
             Settings
           </SheetTitle>
           <SheetDescription className="text-gray-500">
             Update your preferences below and save changes.
           </SheetDescription>
         </SheetHeader>
-        <form className="flex flex-col gap-4 mt-2">
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="dollar-input"
-              className="block text-sm font-medium text-gray-700"
+        <div className="p-1.5">
+          <form className="flex flex-col gap-4 mt-2">
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="dollar-input"
+                className="block text-[15px] font-medium text-gray-700"
+              >
+                Dollar Value
+              </label>
+              <Input
+                id="dollar-input"
+                type="number"
+                placeholder="Enter Dollar Value"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                className="focus:ring-2 focus:ring-primary border rounded px-3 py-2 text-base bg-gray-50"
+              />
+            </div>
+            <Button
+              onClick={onSave}
+              className="w-full bg-primary text-white hover:bg-primary/90 transition-colors font-semibold rounded shadow"
+              type="button"
             >
-              Dollar Value
-            </label>
-            <Input
-              id="dollar-input"
-              type="number"
-              placeholder="Enter Dollar Value"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              className="focus:ring-2 focus:ring-primary border rounded px-3 py-2 text-base bg-gray-50"
-            />
-          </div>
-          <Button
-            onClick={onSave}
-            className="w-full bg-primary text-white hover:bg-primary/90 transition-colors font-semibold rounded shadow"
-            type="button"
-          >
-            Save
-          </Button>
-        </form>
+              Save
+            </Button>
+          </form>
+        </div>
       </SheetContent>
     </Sheet>
   );

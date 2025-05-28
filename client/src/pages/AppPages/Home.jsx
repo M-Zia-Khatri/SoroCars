@@ -39,6 +39,7 @@ export default function Home() {
       alert(error?.response?.data?.message || "Failed to add car");
     },
   });
+  
   const onSubmit = (data) => {
     const carData = {
       Stock_Id: data.Stock_Id.trim(),

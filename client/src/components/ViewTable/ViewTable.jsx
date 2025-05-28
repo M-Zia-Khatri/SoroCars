@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,11 +9,12 @@ import {
 } from "@/components/ui/table";
 
 export default function ViewTable({ data, saleType, THColumns }) {
-  console.log(data)
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({});
   return (
     <div className="p-4 space-y-4">
       <h2 className="text-xl font-semibold">
-        Car Details (Sale Type: <span className="capitalize">{saleType}</span>)
+        Car Details of <span className="capitalize">{saleType}</span>
       </h2>
 
       <Table>
@@ -25,7 +26,7 @@ export default function ViewTable({ data, saleType, THColumns }) {
             ))}
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody className="text-center">
           {saleType === "Stock Invoice" && data?.cars?.length > 0 ? (
             <>
               {data.cars.map((item, index) => (
@@ -64,6 +65,39 @@ export default function ViewTable({ data, saleType, THColumns }) {
                 <TableCell>{item?.Status ?? "-"}</TableCell>
                 <TableCell>{item?.Sale_type ?? "-"}</TableCell>
                 <TableCell>{item?.Agency ?? "-"}</TableCell>
+                {item?.Stock_Id === "Stock" && (
+                  <TableCell>
+                    {editingId === item?.Stock_Id ? (
+                      <>
+                        <Button
+                          onClick={handleSave}
+                          disabled={updateMutation.isLoading}
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setEditingId(null);
+                            setEditData({});
+                          }}
+                          variant="secondary"
+                        >
+                          Cancel
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button onClick={() => handleEdit(item)}>Edit</Button>
+                        <Button
+                          onClick={() => handleDelete(item.)}
+                          variant="destructive"
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
+                  </TableCell>
+                )}
               </TableRow>
             ))
           ) : (
