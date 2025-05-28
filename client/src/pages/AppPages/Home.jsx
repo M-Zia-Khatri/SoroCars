@@ -18,6 +18,8 @@ export default function Home() {
       Status: "",
       Sale_type: "",
       Agency: "",
+      UserId: userData.userId,
+      AgentName : "",
     },
   });
 
@@ -47,6 +49,7 @@ export default function Home() {
       Sale_type: data.Sale_type,
       Agency: data.Agency,
       UserId: userData.userId,
+      AgentName: data.AgentName.trim(),
     };
     mutation.mutate(carData);
   };

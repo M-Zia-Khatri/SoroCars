@@ -59,6 +59,7 @@ export const createCarDetail = async (req, res) => {
       Invoice_Id,
       AdjustmentSTR,
       Status,
+      AgentName,
     } = req.body;
 
     if (
@@ -66,7 +67,8 @@ export const createCarDetail = async (req, res) => {
       AmountSTR == null ||
       Sale_type == null ||
       Agency == null ||
-      UserId == null
+      UserId == null ||
+      AgentName == null
     ) {
       return res
         .status(400)
@@ -109,6 +111,7 @@ export const createCarDetail = async (req, res) => {
       Sale_type,
       Agency, // Make sure to use correct spelling from your model
       User_Id, // Correct field name
+      AgentName,
     });
 
     res

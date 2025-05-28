@@ -56,7 +56,7 @@ export default function ViewTable({ data, saleType, THColumns }) {
             data.map((item, index) => (
               <TableRow key={item.id ?? index}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{item?.User?.Name ?? "-"}</TableCell>
+                <TableCell>{item?.AgentName ?? "-"}</TableCell>
                 <TableCell>{item?.Invoice_Id ?? "-"}</TableCell>
                 <TableCell>{item?.Stock_Id ?? "-"}</TableCell>
                 <TableCell>{item?.Adjustment ?? "-"}</TableCell>

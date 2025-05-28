@@ -13,11 +13,14 @@ const CarDetail = sequelize.define(
     Sale_type: { type: DataTypes.ENUM("Stock", "Auction") },
     Agency: { type: DataTypes.ENUM("Durrani", "AA-Japan") },
     User_Id: { type: DataTypes.INTEGER, allowNull: false },
+    AgentName: { type: DataTypes.STRING, allowNull: false },
   },
   {
     tableName: "car_details",
-    timestamps: false,
+    timestamps: true,
   }
 );
+
+sequelize.sync({ alter: true });
 
 export default CarDetail;

@@ -32,10 +32,10 @@ const User = sequelize.define(
   },
   {
     tableName: "users",
-    timestamps: false,
+    timestamps: true,
   }
 );
 
-sequelize.sync({ alter: false });
+sequelize.sync({ alter: true });
 
 export default User;

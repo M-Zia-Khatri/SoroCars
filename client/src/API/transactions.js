@@ -16,3 +16,16 @@ export const fetchAuctionTransactions = async (stockId) => {
   const { data } = await axiosInstance.get(url);
   return data;
 };
+
+export const deleteAuctionTransaction = async (id) => {
+  const { data } = await axiosInstance.delete(`auction-transaction/${id}`);
+  return data;
+};
+
+export const updateAuctionTransaction = async (id, payload) => {
+  const { data } = await axiosInstance.put(
+    `auction-transaction/${id}`,
+    payload
+  );
+  return data;
+}

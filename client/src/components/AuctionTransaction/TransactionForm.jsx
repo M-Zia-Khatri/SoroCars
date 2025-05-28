@@ -30,6 +30,9 @@ export default function TransactionForm({
   const Transaction_Invoice_Id = watch("Transaction_Invoice_Id");
   const transactionType = watch("transactionType");
   const amount = watch("amount");
+  const Sender = watch("Sender");
+  const Receiver = watch("Receiver");
+  const Partner = watch("Partner");
   const date = watch("Transaction_Date");
 
   return (
@@ -107,7 +110,7 @@ export default function TransactionForm({
             )}
           />
         )}
-        
+
         {/* Amount Input */}
         {transactionType && (
           <FormField
@@ -133,9 +136,60 @@ export default function TransactionForm({
             )}
           />
         )}
-        
-        {/* Transaction Date */}
+
         {amount && (
+          <FormField
+            control={control}
+            name="Sender"
+            rules={{ required: "Sender is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sender</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Sender" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
+        {Sender && (
+          <FormField
+            control={control}
+            name="Receiver"
+            rules={{ required: "Receiver is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Receiver</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Receiver" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
+        {Receiver && (
+          <FormField
+            control={control}
+            name="Partner"
+            rules={{ required: "Partner is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Partner</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Partner" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
+        {/* Transaction Date */}
+        {Partner && (
           <FormField
             control={control}
             name="Transaction_Date"

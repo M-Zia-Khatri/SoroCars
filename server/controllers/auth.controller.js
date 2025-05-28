@@ -33,7 +33,7 @@ export async function login(req, res) {
     const jwtToken = jwt.sign(
       { email: user.Email, id: user.User_Id },
       process.env.JWT_SECRET,
-      { expiresIn: "2h" } // Token expires in 2 hour if user closes the website
+      { expiresIn: "3h" } // Token expires in 2 hour if user closes the website
     );
 
     res.json({

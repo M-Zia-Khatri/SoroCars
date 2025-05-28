@@ -6,6 +6,7 @@ import TransactionHistory from "@/components/AuctionTransaction/TransactionHisto
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { addAuctionTransaction } from "@/API/transactions";
+import { Send } from "lucide-react";
 
 export default function AuctionTransaction() {
   const [value, setValue] = useState("");
@@ -44,6 +45,9 @@ export default function AuctionTransaction() {
         Transaction_Id: data.Transaction_Id,
         Transaction_Invoice_Id: data.Transaction_Invoice_Id,
         Transaction_Date: data.Transaction_Date,
+        Sender: data.Sender,
+        Receiver: data.Receiver,
+        Partner: data.Partner,
       };
 
       console.log(payload);

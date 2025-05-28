@@ -8,6 +8,7 @@ export default function CarForm({ form, onSubmit, isSubmitting }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <TextInputField name="AgentName" label="Agent Name" form={form} />
         <TextInputField name="Stock_Id" label="Stock ID" form={form} />
         <TextInputField name="Invoice_Id" label="Invoice ID" form={form} />
         <TextInputField
