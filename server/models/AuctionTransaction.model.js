@@ -57,6 +57,4 @@ const AuctionTransaction = sequelize.define(
   }
 );
 
-sequelize.sync({ alter: true });
-
 export default AuctionTransaction;

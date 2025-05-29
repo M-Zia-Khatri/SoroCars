@@ -7,16 +7,8 @@ import RadioInputGroup from "../form-fields/RadioInputGroup";
 export default function CarForm({ form, onSubmit, isSubmitting }) {
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-5 space-x-2.5 grid grid-cols-2"
-      >
-        <TextInputField
-          className={"col-span-2"}
-          name="AgentName"
-          label="Agent Name"
-          form={form}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <TextInputField name="AgentName" label="Agent Name" form={form} />
         <TextInputField name="Stock_Id" label="Stock ID" form={form} />
         <TextInputField name="Invoice_Id" label="Invoice ID" form={form} />
         <TextInputField
@@ -31,8 +23,7 @@ export default function CarForm({ form, onSubmit, isSubmitting }) {
           type="number"
           form={form}
         />
-
-        <TextInputField className={"col-span-full"} name="Status" label="Status" form={form} />
+        <TextInputField name="Status" label="Status" form={form} />
 
         <RadioInputGroup
           name="Sale_type"
@@ -48,7 +39,7 @@ export default function CarForm({ form, onSubmit, isSubmitting }) {
           form={form}
         />
 
-        <Button type="submit" className="w-full col-span-full" disabled={isSubmitting}>
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </form>

@@ -14,28 +14,25 @@ export default function TextInputField({
   form,
   type = "text",
   placeholder,
-  className,
 }) {
   return (
-    <div className={className}>
-      <FormField
-        control={form.control}
-        name={name}
-        render={({ field }) => (
-          <FormItem className="space-y-2">
-            <FormLabel className="text-sm font-medium">{label}</FormLabel>
-            <FormControl>
-              <Input
-                type={type}
-                placeholder={placeholder || label}
-                className="w-full px-3 py-2 border rounded-md shadow-sm"
-                {...field}
-              />
-            </FormControl>
-            <FormMessage className="text-xs text-red-500" />
-          </FormItem>
-        )}
-      />
-    </div>
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="space-y-2">
+          <FormLabel className="text-sm font-medium">{label}</FormLabel>
+          <FormControl>
+            <Input
+              type={type}
+              placeholder={placeholder || label}
+              className="w-full px-3 py-2 border rounded-md shadow-sm"
+              {...field}
+            />
+          </FormControl>
+          <FormMessage className="text-xs text-red-500" />
+        </FormItem>
+      )}
+    />
   );
 }

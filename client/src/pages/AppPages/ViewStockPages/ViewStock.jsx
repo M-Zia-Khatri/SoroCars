@@ -11,7 +11,7 @@ export default function ViewStock() {
   const saleType = useMemo(() => "Stock", []);
   const THColumns = useMemo(
     () => [
-      "Agent",
+      "Agent Name",
       "Invoice Id",
       "Stock Id",
       "Adjustment",
@@ -26,7 +26,6 @@ export default function ViewStock() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["cars-details", saleType, search],
     queryFn: fetchCars,
-    retry: false,
     enabled: !!saleType,
   });
 
@@ -39,6 +38,8 @@ export default function ViewStock() {
 
   return (
     <div className="space-y-4">
+      <h2 className="text-xl font-semibold">View Stock</h2>
+
       <div
         className={`flex items-center gap-2 ${isError ? "hidden" : "block"}`}
       >

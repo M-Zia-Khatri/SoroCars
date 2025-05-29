@@ -35,18 +35,3 @@ export const addCar = async (carData) => {
   const response = await axiosInstance.post(APIUrls.CARS_DETAILS_URL, carData);
   return response.data;
 };
-
-export const updateCar = async (id, carData) => {
-  const response = await axiosInstance.put(
-    `${APIUrls.CARS_DETAILS_URL}${id}`,
-    carData
-  );
-  return response.data;
-};
-
-export const deleteCar = async (id) => {
-  const response = await axiosInstance.delete(
-    `${APIUrls.CARS_DETAILS_URL}${id}`
-  );
-  return response.data;
-};

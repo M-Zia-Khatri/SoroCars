@@ -8,6 +8,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "installAll": "npm i && cd ./server && npm i server  && cd ../client && npm i client && cd ..",
     "client": "cd client && npm run dev",
     "server": "cd server && npm run start",
     "start": "concurrently \"npm run server\" \"npm run client\""

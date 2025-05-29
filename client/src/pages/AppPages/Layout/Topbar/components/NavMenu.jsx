@@ -42,18 +42,6 @@ export default function NavMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {/* Add Car Details Link */}
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild>
-            <Link
-              to={AppNavigation.Home}
-              className={navigationMenuTriggerStyle()}
-            >
-              Add Car Details
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-
         {/* Stock Menu */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Stock</NavigationMenuTrigger>
@@ -76,6 +64,18 @@ export default function NavMenu() {
               ))}
             </ul>
           </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        {/* Add Car Details Link */}
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link
+              to={AppNavigation.Home}
+              className={navigationMenuTriggerStyle()}
+            >
+              Add Car Details
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

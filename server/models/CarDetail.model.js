@@ -21,6 +21,5 @@ const CarDetail = sequelize.define(
   }
 );
 
-sequelize.sync({ alter: true });
 
 export default CarDetail;
